@@ -1,1 +1,1 @@
-# AniList-
+# AniList+
