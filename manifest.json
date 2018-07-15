@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "AniList+",
+    "version": "0.1.0",
+  
+    "description": "Enhanced AniList experience",
+    "icons": {},
+  
+    "browser_action": {
+        "default_title": "AniList+",
+        "default_popup": "popup.html"
+      },
+    "author": "HadriAn",
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "content_scripts": [
+      {
+        "matches": ["http://*.anilist.co/*"],
+        "run_at": "document_idle",
+        "js": ["contentScript.js"]
+      }
+    ],
+    "homepage_url": "http://path/to/homepage",
+    "minimum_chrome_version": "50",
+    "permissions": ["tabs"],
+    "short_name": "Short Name",
+    "version_name": "preRelease"
+  }
