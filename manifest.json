@@ -29,5 +29,11 @@
   ],
   "minimum_chrome_version": "50",
   "permissions": ["tabs", "activeTab"],
-  "short_name": "AniList+"
+  "short_name": "AniList+",
+  "icons": {
+    "16": "images/icon.png",
+    "32": "images/icon.png",
+    "64": "images/icon.png",
+    "128": "images/icon.png"
+  }
   }
