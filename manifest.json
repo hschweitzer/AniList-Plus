@@ -22,7 +22,7 @@
   "content_scripts": [
     {
       "matches": ["https://anilist.co/user/*"],
-      "js": ["jquery-3.3.1.min.js", "contentScript.js"],
+      "js": ["externals-scripts/jquery-3.3.1.min.js", "list_visual_changes.js", "browsing_filter_menu.js"],
       "run_at": "document_end",
       "all_frames": true
     }

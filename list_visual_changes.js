@@ -1,3 +1,8 @@
+/* Summary :
+* Changes that affect visual appearance of anime list and manga list
+* 
+*/
+
 function styleEnhancement() {
     let listType = document.querySelector('.content.container>div').classList[1]
     let scoreType = document.querySelector('.content.container>div').classList[2]
@@ -31,14 +36,14 @@ function styleEnhancement() {
             accuracy = 10;
             break;
     }
-        
+
     for (let i = 0; i < scoreElementArraySorted.length; i++) {
         let score = Math.ceil(15 + scoreArray[i] * 80 / accuracy)
         scoreElementArraySorted[i].style.color = 'hsl('+ score +', 100%, 50%)'
     }
     for (let i = 0; i < progressArray.length; i++) {
         progressArray[i].style.color = 'inherit'
-    }    
+    }
 }
 
 $('#app').bind("DOMSubtreeModified", function() {
