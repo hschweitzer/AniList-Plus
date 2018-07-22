@@ -1,29 +1,33 @@
 {
-    "manifest_version": 2,
-    "name": "AniList+",
-    "version": "0.1.2",
-  
-    "description": "Enhanced AniList experience",
-    "icons": {},
-  
-    "browser_action": {
-        "default_title": "AniList+",
-        "default_icon": {
-          "16": "images/icon.png",
-          "32": "images/icon.png",
-          "64": "images/icon.png",
-          "128": "images/icon.png"
-        }
-      },
-    "author": "HadriAn",
-    "content_scripts": [
-      {
-        "matches": ["https://*.anilist.co/*"],
-        "run_at": "document_idle",
-        "js": ["contentScript.js"]
+  "manifest_version": 2,
+  "name": "AniList+",
+  "version": "0.3",
+
+  "description": "Enhanced AniList experience",
+
+  "page_action": {
+      "default_title": "AniList+",
+      "default_icon": {
+        "16": "images/icon.png",
+        "32": "images/icon.png",
+        "64": "images/icon.png",
+        "128": "images/icon.png"
       }
-    ],
-    "minimum_chrome_version": "50",
-    "permissions": ["tabs"],
-    "short_name": "AniList+"
+    },
+  "author": "HadriAn",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://anilist.co/user/*"],
+      "js": ["jquery-3.3.1.min.js", "contentScript.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "minimum_chrome_version": "50",
+  "permissions": ["tabs", "activeTab"],
+  "short_name": "AniList+"
   }
