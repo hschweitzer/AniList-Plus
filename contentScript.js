@@ -44,7 +44,6 @@ function styleEnhancement() {
 $('#app').bind("DOMSubtreeModified", function() {
     chrome.runtime.sendMessage({greeting: "isList"}, function(response) {
         if(response.farewell === "true"){
-            console.log("Content has been changed in a list page")
             styleEnhancement()
         }
       });
