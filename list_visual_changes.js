@@ -23,26 +23,27 @@ function styleEnhancement() {
     switch (scoreType) {
         case "POINT_100":
             accuracy = 100
-            break;
+            break
 
         case "POINT_5":
             accuracy = 5
-            break;
+            break
 
         case "POINT_3":
             accuracy = 3
-            break;
+            break
 
         default:
-            accuracy = 10;
-            break;
+            accuracy = 10
+            break
     }
 
+    // This method only really works if the colors are complementary
     for (let i = 0; i < scoreElementArraySorted.length; i++) {
         let score = Math.ceil(15 + scoreArray[i] * 80 / accuracy)
         scoreElementArraySorted[i].style.color = 'hsl('+ score +', 100%, 50%)'
     }
-    
+
     for (let i = 0; i < progressArray.length; i++) {
         progressArray[i].style.color = 'inherit'
     }
@@ -53,5 +54,5 @@ $('#app').bind("DOMSubtreeModified", function() {
         if(response.farewell === "true"){
             styleEnhancement()
         }
-      });
+    })
 })
