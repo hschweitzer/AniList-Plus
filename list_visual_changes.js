@@ -50,9 +50,7 @@ function styleEnhancement() {
 }
 
 $('#app').bind("DOMSubtreeModified", function() {
-    chrome.runtime.sendMessage({greeting: "isList"}, function(response) {
-        if(response.farewell === "true"){
-            styleEnhancement()
-        }
-    })
+    if(window.location.href.includes('animelist') || window.location.href.includes('mangalist')) {
+        styleEnhancement()
+    }
 })
