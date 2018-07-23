@@ -5,3 +5,5 @@
 
 ## Upcoming features:
 - Highlighting colors customization
+
+### [Link to AniList Website](https://anilist.co)
