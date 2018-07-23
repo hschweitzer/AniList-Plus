@@ -49,8 +49,14 @@ function styleEnhancement() {
     }
 }
 
-$('#app').bind("DOMSubtreeModified", function() {
+let observer = new MutationObserver(function (MutationRecords, MutationObserver) {
     if(window.location.href.includes('animelist') || window.location.href.includes('mangalist')) {
         styleEnhancement()
     }
+})
+
+observer.observe(document.getElementById('app'), {
+    childList: true,
+    attributes: true,
+    subtree: true
 })
