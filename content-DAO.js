@@ -20,7 +20,7 @@ var observer = new MutationObserver(function() {
 
 function test() {
     var variables = {
-        id: '100922'
+        id: 100922
     }
     var dao = new DAO(variables)
     dao.getTitle()
@@ -55,7 +55,7 @@ var variables = {
 *
 */
 
-"use strict"
+
 class DAO {
 
     constructor(variables) {
@@ -66,7 +66,7 @@ class DAO {
     getTitle(mediaId) {
     
         var query = `
-        query ($id: Int) { (id)
+        query ($id: Int) {
             Media (id: $id, type: ANIME) { 
                 id
                 title {
