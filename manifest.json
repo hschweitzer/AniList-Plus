@@ -23,10 +23,8 @@
     {
       "matches": ["*://anilist.co/*"],
       "js": [
-        "externals-scripts/jquery-3.3.1.min.js", 
         "list_visual_changes.js", 
-        "nav_visual_changes.js", 
-        "browsing_filter_menu.js"
+        "content-DAO.js"
       ],
       "run_at": "document_end",
       "all_frames": true
