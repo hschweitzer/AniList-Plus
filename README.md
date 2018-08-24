@@ -8,4 +8,13 @@
 - Proper 'Studio' tab on anime pages
 - Filters and other options on Studio pages
 
-### [Link to AniList Website](https://anilist.co/home)
+## Try the Beta (Chrome only):
+
+- Download the [latest source code](https://github.com/hschweitzer/AniList-Plus/releases)
+### How to install:
+
+- Open the Extension Management page by navigating to chrome://extensions.
+- Enable Developer Mode by clicking the toggle switch next to Developer mode.
+- Click the LOAD UNPACKED button and select the extension directory.
+
+### [Visit AniList.co](https://anilist.co/home)
