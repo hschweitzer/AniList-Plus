@@ -23,12 +23,17 @@ var observer = new MutationObserver(function() {
     }
 })
 
-function mediaTitle(a) {
+async function mediaTitle(a) {
     var variables = {
         id: a
     }
     var dao = new DAO(variables)
-    dao.getTitle()
+    await dao.getTitle()
+    var title = dao.getData()
+    console.log(title)
+    await dao.getStudios()
+    var studios = dao.getData()
+    console.log(studios)
 }
 
 function mediaId() {
@@ -41,29 +46,28 @@ observer.observe(document, { childList: true, subtree: true })
 
 
 
-/* 
-* DAO
-*
-* Summary:
-* Contains functions to access anilist API
-* Documentation https://anilist.github.io/ApiV2-GraphQL-Docs/
-*Template for "variables":
-var variables = {
-    id: mediaId
-}
-*/
 
-/* TODO error 400 when doing dao.getTitle()
-*
-"Syntax Error GraphQL (2:28) Expected Name, found (
 
-1: 
-2:         query ($id: Int) { (id)
-                              ^
-3:             Media (id: $id, type: ANIME) { 
-"
-*
-*/
+
+
+
+
+///////////////////////////////////////////////////////////////////
+
+///////////////////////// DAO /////////////////////////////////////
+//                                                               //
+//                                                               //
+//  Summary:                                                     //
+//  Contains functions to access anilist API                     //
+//  Documentation https://anilist.github.io/ApiV2-GraphQL-Docs/  //
+//                                                               //
+///////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 
 class DAO {
@@ -73,8 +77,19 @@ class DAO {
         this.url = 'https://graphql.anilist.co'
     }
 
+    ////////////////////
+    // GETTER SETTERS //
+    ////////////////////
+
+    getData() {
+        return DAO.data
+    }
+
+    ////////////////////
+    ////////////////////
+    ////////////////////
     
-    fetchQuery(query) {
+    async fetchQuery(query) {
         var url = this.url
         var options = {
             method: 'POST',
@@ -88,33 +103,33 @@ class DAO {
             })
         }
         
-        fetch(url, options).then(this.handleResponse)
+        await fetch(url, options).then(this.handleResponse)
         .then(this.handleData)
         .catch(this.handleError)
     }
     
     handleResponse(response) {
         return response.json().then(function (json) {
-            return response.ok ? json : Promise.reject(json);
+            return response.ok ? json : Promise.reject(json)
         })
     }
     
     handleError(error) {
-        alert('Error, check console');
-        console.error(error);
+        alert('Error, check console')
+        console.error(error)
     }
     
     handleData(data) {
-        console.log(data);
+        DAO.data = data
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //  QUERY (see https://anilist.github.io/ApiV2-GraphQL-Docs/query.doc.html)  //
-    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    //  QUERY https://anilist.github.io/ApiV2-GraphQL-Docs/query.doc.html  //
+    /////////////////////////////////////////////////////////////////////////
     
 
-    getTitle(mediaId) {
+    async getTitle() {
     
         var query = `
         query ($id: Int) {
@@ -128,13 +143,35 @@ class DAO {
             }
         }
         `
-        this.fetchQuery(query)
+        await this.fetchQuery(query)
     }
 
+    async getStudios() {
+        var query = `
+        query ($id: Int) {
+            Media (id: $id, type: ANIME) {
+                id
+                studios {
+                    nodes {
+                        name
+                        media {
+                            nodes {
+                                title {
+                                    romaji
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        `;
+        await this.fetchQuery(query)
+    } 
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    //  MUTATION (see https://anilist.github.io/ApiV2-GraphQL-Docs/mutation.doc.html)  //
-    /////////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////
+    // MUTATION https://anilist.github.io/ApiV2-GraphQL-Docs/mutation.doc.html /
+    ////////////////////////////////////////////////////////////////////////////
 
 }
