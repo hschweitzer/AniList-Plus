@@ -8,13 +8,6 @@
 - Highlighting colors customization(?)
 - Filters and other options on Studio pages
 
-## Try the Beta (Chrome only):
-
-- Download the [latest source code](https://github.com/hschweitzer/AniList-Plus/releases)
-### How to install:
-
-- Open the Extension Management page by navigating to chrome://extensions.
-- Enable Developer Mode by clicking the toggle switch next to Developer mode.
-- Click the LOAD UNPACKED button and select the extension directory.
+## [Try the Beta (Chrome only)](https://chrome.google.com/webstore/detail/anilist%20-for-anilist/elpfbellmnhbenkcdofdbdkneppoekhl)
 
 ### [Visit AniList.co](https://anilist.co/home)
