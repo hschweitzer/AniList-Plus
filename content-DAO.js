@@ -6,10 +6,10 @@
 
 'use strict'
 
-function showStudioLink(navBar) {
+function showStudioLink(navBar, vuedata) {
     navBar.insertAdjacentHTML(
         'beforeend', 
-        '<a data-v-256f73e9 id="studio_link" style="cursor: pointer;" class="link">Studios</a>'
+        `<a ${vuedata} id="studio_link" style="cursor: pointer;" class="link">Studios</a>`
     )
 }
 
@@ -20,7 +20,8 @@ var observer = new MutationObserver(async function() {
 
     if(navBar && !studioLink && (url.includes('/anime/'))) { 
         // When re-visiting the page of an anime the studio link will sometimes be loaded before the first test
-        showStudioLink(navBar)
+        let vuedata = navBar.firstElementChild.attributes[0].name;
+        showStudioLink(navBar, vuedata)
         studioLink = document.getElementById('studio_link')
         let res = await mediaTitle(mediaId())
         let studioList = res.data.Media.studios.nodes
@@ -84,7 +85,11 @@ function createStudiosElement(studioList) {
         for (var j = 0; j < mediaList.length; j++) {
             let mediaElement = document.createElement('div')
             mediaElement.classList.add("media-preview-card", "small")
-            mediaElement.setAttribute("data-v-711636d7", "")
+            /**
+             * TODO IMPORTANT
+             * data-v-xxxxxxxx needs to be fetched in some way or the css needs to be injected manually QUICKLY
+             */
+            mediaElement.setAttribute("data-v-2737c4f7", "")
             mediaElement.setAttribute("data-v-9c15f6ba", "")
             const mediaLink = "/anime/" + mediaList[j].id
             const mediaCover = mediaList[j].coverImage.medium
@@ -94,17 +99,17 @@ function createStudiosElement(studioList) {
             const mediaScore = mediaList[j].averageScore
             const mediaYear = mediaList[j].startDate.year
             const mediaString =
-            `<a data-v-711636d7="" href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
-                <div data-v-711636d7="" class="image-text">
-                    <div data-v-9c15f6ba="">${mediaYear} · ${mediaScore}</div>
+            `<a data-v-2737c4f7 href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
+                <div data-v-2737c4f7 class="image-text">
+                    <div data-v-4fd869dd>${mediaYear} · ${mediaScore}</div>
                 </div> <!---->
             </a>
-            <div data-v-711636d7="" class="content">
-                <div data-v-711636d7="" class="info-header">
-                    <!-- <div data-v-9c15f6ba="" data-v-711636d7="">Side Story</div> -->
+            <div data-v-2737c4f7 class="content">
+                <div data-v-2737c4f7 class="info-header">
+                    <!-- <div data-v-9c15f6ba="" data-v-2737c4f7>Side Story</div> -->
                 </div> 
-                <a data-v-711636d7="" href="${mediaLink}" class="title">${mediaTitle}</a>
-                <div data-v-711636d7="" class="info">
+                <a data-v-2737c4f7 href="${mediaLink}" class="title">${mediaTitle}</a>
+                <div data-v-2737c4f7 class="info">
                 ${mediaFormat} · ${mediaStatus}
                 </div>
             </div>`
