@@ -15,10 +15,6 @@
       }
     },
   "author": "rirrsmo & hadrian",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
   "content_scripts": [
     {
       "matches": ["*://anilist.co/*"],
