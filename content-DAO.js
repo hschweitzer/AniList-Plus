@@ -178,10 +178,7 @@ function createStudiosElement(studioList) {
         for (var j = 0; j < mediaList.length; j++) {
             let mediaElement = document.createElement('div')
             mediaElement.classList.add("media-preview-card", "small", "studio-card")
-            /**
-             * TODO IMPORTANT
-             * data-v-xxxxxxxx needs to be fetched in some way or the css needs to be injected manually QUICKLY
-             */
+            
             const mediaLink = "/anime/" + mediaList[j].id
             const mediaCover = mediaList[j].coverImage.medium
             const mediaTitle = mediaList[j].title.userPreferred
