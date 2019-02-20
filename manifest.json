@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Anilist+ for Anilist",
-  "version": "0.2.3",
+  "version": "0.3.0",
 
   "description": "Enhanced AniList experience",
 
@@ -20,7 +20,7 @@
       "matches": ["*://anilist.co/*"],
       "js": [
         "list_visual_changes.js", 
-        "content-DAO.js"
+        "content-script.js"
       ],
       "run_at": "document_end",
       "all_frames": true
