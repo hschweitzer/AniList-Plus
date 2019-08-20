@@ -1,39 +1,45 @@
 {
-  "manifest_version": 2,
-  "name": "Anilist+ for Anilist",
-  "version": "0.3.0",
+	"manifest_version": 2,
+	"name": "Anilist+ for Anilist",
+	"version": "0.3.0",
 
-  "description": "Enhanced AniList experience",
+	"description": "Enhanced AniList experience",
 
-  "browser_action": {
-      "default_title": "AniList+ for Anilist",
-      "default_icon": {
-        "16": "images/icon.png",
-        "32": "images/icon.png",
-        "64": "images/icon.png",
-        "128": "images/icon-128.png"
-      },
-      "default_popup": "popup.html"
-    },
-  "author": "rirrsmo & hadrian",
-  "content_scripts": [
-    {
-      "matches": ["*://anilist.co/*"],
-      "js": [
-        "list_visual_changes.js", 
-        "content-script.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
-  "minimum_chrome_version": "50",
-  "permissions": ["tabs", "activeTab","*://anilist.co/*","webNavigation"],
-  "short_name": "AniList+",
-  "icons": {
-    "16": "images/icon.png",
-    "32": "images/icon.png",
-    "64": "images/icon.png",
-    "128": "images/icon-128.png"
-  }
+	"browser_action": {
+		"default_title": "AniList+ for Anilist",
+		"default_icon": {
+		"16": "images/icon.png",
+		"32": "images/icon.png",
+		"64": "images/icon.png",
+		"128": "images/icon-128.png"
+		},
+		"default_popup": "popup.html"
+	},
+	"author": "rirrsmo & hadrian",
+	"content_scripts": [
+	{
+		"matches": ["*://anilist.co/*"],
+		"js": [
+		"list_visual_changes.js", 
+		"content-script.js"
+		],
+		"run_at": "document_end",
+		"all_frames": true
+	}
+	],
+	"minimum_chrome_version": "50",
+	"permissions": [
+		"identity",
+		"tabs",
+		"activeTab",
+		"*://anilist.co/*",
+		"webNavigation"
+	],
+	"short_name": "AniList+",
+	"icons": {
+	"16": "images/icon.png",
+	"32": "images/icon.png",
+	"64": "images/icon.png",
+	"128": "images/icon-128.png"
+	}
 }
