@@ -29,6 +29,7 @@
 	],
 	"minimum_chrome_version": "50",
 	"permissions": [
+		"storage",
 		"identity",
 		"tabs",
 		"activeTab",
