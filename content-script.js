@@ -15,6 +15,7 @@ function showStudioLink(navBar, vuedata) {
 
 var observer = new MutationObserver(function() {
     let navBar = document.querySelector('.content>.nav');
+    const linkElements = document.querySelectorAll('.link');
     let url = window.location.href;
     let studioLink = document.getElementById('studio_link');
 
@@ -55,6 +56,14 @@ var observer = new MutationObserver(function() {
             });
         });
     }
+
+    // Scrolls to the top when a "link" class is clicked because content is only loaded if the scrolling is at the top which can result in empty pages.
+    // Can be heavily optimized with moderate work. Too lazy atm
+    linkElements.forEach(linkElement => {
+        linkElement.addEventListener('click', (e) => {
+            window.scrollTo(0,0);
+        })
+    });
 });
 
 function fetchStudios(a) {
