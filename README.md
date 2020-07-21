@@ -3,6 +3,7 @@
 - Improved readability of the progress for users with grey theme when using grid lists
 - Scores in Anime and Manga lists are highlighted from red to green
 - Proper 'Studio' tab on anime pages
+- You no longer need to scroll to the top of the page yourself after clicking a link.
 
 ## Upcoming features:
 - Highlighting colors customization(?)
