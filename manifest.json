@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Anilist+ for Anilist",
-  "version": "0.4.0",
+  "version": "0.4.1",
 
   "description": "Enhanced AniList experience",
 
@@ -27,7 +27,7 @@
     }
   ],
   "minimum_chrome_version": "50",
-  "permissions": ["tabs", "activeTab","*://anilist.co/*","webNavigation"],
+  "permissions": ["*://anilist.co/*","webNavigation"],
   "short_name": "AniList+",
   "icons": {
     "16": "images/icon.png",
