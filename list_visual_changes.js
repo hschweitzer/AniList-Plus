@@ -50,7 +50,11 @@ function styleEnhancement(saturation) {
 
 var observer = new MutationObserver(function () {
     if (window.location.href.includes('animelist') || window.location.href.includes('mangalist')) {
-        let listType = document.querySelector('.content.container>div').classList[1]    ;
+        let listType = null;
+        const listTypeElement = document.querySelector('.content.container>div');
+        if (listTypeElement !== null) {
+            listType = listTypeElement.classList[1];
+        }
         let theme = document.getElementsByTagName('body')[0].className;
         let saturation;
         if (theme === "site-theme-dark" || listType === "cards")
