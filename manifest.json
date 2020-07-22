@@ -27,7 +27,7 @@
     }
   ],
   "minimum_chrome_version": "50",
-  "permissions": ["*://anilist.co/*","webNavigation"],
+  "permissions": ["*://anilist.co/*"],
   "short_name": "AniList+",
   "icons": {
     "16": "images/icon.png",
