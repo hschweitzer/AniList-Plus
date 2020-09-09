@@ -6,8 +6,7 @@
 - You no longer need to scroll to the top of the page yourself after clicking a link.
 
 ## Upcoming features:
-- Highlighting colors customization(?)
-- Filters and other options on Studio pages
+- "X friend liked this" suggestion
 
 ## [Get it now on the Chrome Webstore!](https://chrome.google.com/webstore/detail/anilist%20-for-anilist/elpfbellmnhbenkcdofdbdkneppoekhl)
 
