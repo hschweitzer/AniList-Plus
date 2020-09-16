@@ -6,64 +6,97 @@
 
 'use strict';
 
+const observerConfig = {
+    childList: true,
+    subtree: true
+}
+
+let lastUrl = "";
+
 function showStudioLink(navBar, vuedata) {
     navBar.insertAdjacentHTML(
-        'beforeend', 
+        'beforeend',
         `<a ${vuedata} id="studio_link" style="cursor: pointer;" class="link">Studios</a>`
     )
 }
 
-var observer = new MutationObserver(function() {
-    let navBar = document.querySelector('.content>.nav');
-    const linkElements = document.querySelectorAll('.link');
-    let url = window.location.href;
-    let studioLink = document.getElementById('studio_link');
+var observer = new MutationObserver(function () {
+    chrome.storage.local.get(['lastUrl'], (res) => {
+        lastUrl = res.lastUrl;
+        if (!lastUrl || lastUrl !== window.location.href) {
+            let navBar = document.querySelector('.content>.nav');
+            const linkElements = document.querySelectorAll('.link');
+            let url = window.location.href;
+            let studioLink = document.getElementById('studio_link');
 
-    if(navBar && !studioLink && (url.includes('/anime/'))) { 
-        // When re-visiting the page of an anime the studio link will sometimes be loaded before the first test
-        let vuedata = navBar.firstElementChild.attributes[0].name;
-        showStudioLink(navBar, vuedata);
-        studioLink = document.getElementById('studio_link');
-        fetchStudios(getMediaId()).then((res) => {
-            let studioList = res.data.Media.studios.nodes;
-    
-            studioLink.addEventListener('click', () => {
-                
-                if (window.location.href.split('/').length !== 5) {
-                    let oldLink = document.querySelector('.router-link-exact-active.router-link-active');
-                    oldLink.classList.add('old-container-active');
-                    oldLink.classList.remove('router-link-exact-active', 'router-link-active');
-                } else {
-                    navBar.firstChild.classList.add('old-container-active');
-                }
-                studioLink.classList.add('router-link-exact-active', 'router-link-active');
-                let contentContainer = document.querySelector('.content.container');
-                let oldContainer = contentContainer.lastChild;
-                oldContainer.style.display = 'none';
-                let studiosElement = createStudiosElement(studioList);
-                contentContainer.appendChild(studiosElement);
-    
-                navBar.addEventListener('click', (e) => {
-                    e = window.event? event.srcElement: e.target;
-                    if(e.id !== "studio_link") {
-                        studiosElement.remove();
-                        if(e.className && e.className.indexOf('old-container-active') != -1) {
-                            oldContainer.style.display = 'block';
-                        }                    
-                        studioLink.classList.remove('router-link-exact-active', 'router-link-active');
-                    } 
+            if (navBar && !studioLink && (url.includes('/anime/'))) {
+                // When re-visiting the page of an anime the studio link will sometimes be loaded before the first test
+                let vuedata = navBar.firstElementChild.attributes[0].name;
+                showStudioLink(navBar, vuedata);
+                studioLink = document.getElementById('studio_link');
+                fetchStudios(getMediaId()).then((res) => {
+                    let studioList = res.data.Media.studios.nodes;
+
+                    studioLink.addEventListener('click', () => {
+
+                        if (window.location.href.split('/').length !== 5) {
+                            let oldLink = document.querySelector('.router-link-exact-active.router-link-active');
+                            oldLink.classList.add('old-container-active');
+                            oldLink.classList.remove('router-link-exact-active', 'router-link-active');
+                        } else {
+                            navBar.firstChild.classList.add('old-container-active');
+                        }
+                        studioLink.classList.add('router-link-exact-active', 'router-link-active');
+                        let contentContainer = document.querySelector('.content.container');
+                        let oldContainer = contentContainer.lastChild;
+                        oldContainer.style.display = 'none';
+                        let studiosElement = createStudiosElement(studioList);
+                        contentContainer.appendChild(studiosElement);
+
+                        navBar.addEventListener('click', (e) => {
+                            e = window.event ? event.srcElement : e.target;
+                            if (e.id !== "studio_link") {
+                                studiosElement.remove();
+                                if (e.className && e.className.indexOf('old-container-active') != -1) {
+                                    oldContainer.style.display = 'block';
+                                }
+                                studioLink.classList.remove('router-link-exact-active', 'router-link-active');
+                            }
+                        });
+                    });
                 });
-            });
-        });
-    }
 
-    // Scrolls to the top when a "link" class is clicked because content is only loaded if the scrolling is at the top which can result in empty pages.
-    // Can be heavily optimized with moderate work. Too lazy atm
-    linkElements.forEach(linkElement => {
-        linkElement.addEventListener('click', (e) => {
-            window.scrollTo(0,0);
-        })
+                const navLinks = document.getElementsByClassName('links')[0];
+                console.log(navLinks);
+                if (navLinks !== undefined) {
+                    const isLogged = navLinks.children[1].innerText === 'Profile';
+                    if (isLogged) {
+                        const profileLink = navLinks.children[1].href
+                        const profileLinkeSplitArray = profileLink.split("/");
+                        const userName = profileLinkeSplitArray[4];
+                        const mediaId = getMediaId();
+                    }
+                }
+            }
+
+            // Scrolls to the top when a "link" class is clicked because content is only loaded if the scrolling is at the top which can result in empty pages.
+            // Can be heavily optimized with moderate work. Too lazy atm
+            linkElements.forEach(linkElement => {
+                linkElement.addEventListener('click', (e) => {
+                    window.scrollTo(0, 0);
+                })
+            });
+
+
+        }
+
+
+        chrome.storage.local.set({ 'lastUrl': window.location.href }, () => {
+            console.log("lastUrl set to " + window.location.href);
+        });
     });
+
+
 });
 
 function fetchStudios(a) {
@@ -105,7 +138,7 @@ function createStudiosElement(studioList) {
             const mediaScore = mediaList[j].averageScore;
             const mediaYear = mediaList[j].startDate.year;
             const mediaString =
-            `<a href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
+                `<a href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
                 <div class="image-text">
                     <div data-v-4fd869dd>${mediaYear} · ${mediaScore}</div>
                 </div> <!---->
@@ -129,7 +162,7 @@ function createStudiosElement(studioList) {
     return studiosElement;
 }
 
-observer.observe(document, { childList: true, subtree: true });
+observer.observe(document, observerConfig);
 
 ///////////////////////////////////////////////////////////////////
 
@@ -162,11 +195,11 @@ function fetchQuery(query, url, variables) {
             variables: variables
         })
     };
-    
+
     return fetch(url, options)
-    .then(handleResponse)
-    .then(handleData)
-    .catch(handleError);
+        .then(handleResponse)
+        .then(handleData)
+        .catch(handleError);
 }
 
 function handleResponse(response) {
@@ -234,7 +267,7 @@ function getStudios() {
         }
     }
     `;
-} 
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // MUTATION https://anilist.github.io/ApiV2-GraphQL-Docs/mutation.doc.html /
