@@ -17,8 +17,8 @@ function styleEnhancement(saturation) {
             scoreElementArraySorted.push(scoreElementArray[i]);
         }
     }
-    
-    let accuracy
+
+    let accuracy;
     switch (scoreType) {
         case "POINT_100":
             accuracy = 100;
@@ -37,11 +37,33 @@ function styleEnhancement(saturation) {
             break;
     }
 
-    // This method only really works if the colors are complementary
-    for (let i = 0; i < scoreElementArraySorted.length; i++) {
-        let hue = Math.ceil(15 + scoreArray[i] * 80 / accuracy);
-        scoreElementArraySorted[i].style.color = 'hsl('+ hue +', ' + saturation + ', 50%)';
-    }
+    chrome.storage.sync.get({
+        gradient: 'default'
+    }, (res) => {
+        let gradient = res.gradient;
+
+        switch (gradient) {
+            case 'c2p':
+                for (let i = 0; i < scoreElementArraySorted.length; i++) {
+                    let redValue = Math.ceil((1 - (scoreArray[i] / accuracy)) * 255);
+                    scoreElementArraySorted[i].style.color = 'rgb(' + redValue + ', 150, 170)';
+                }
+                break;
+
+            case 'b2br':
+                for (let i = 0; i < scoreElementArraySorted.length; i++) {
+                    let blueValue = 255 - Math.ceil((1 - (scoreArray[i] / accuracy)) * 255);
+                    scoreElementArraySorted[i].style.color = 'rgb(100, 50, ' + blueValue + ')';
+                }
+
+            default:
+                for (let i = 0; i < scoreElementArraySorted.length; i++) {
+                    let hue = Math.ceil(30 + scoreArray[i] * 80 / accuracy);
+                    scoreElementArraySorted[i].style.color = 'hsl(' + hue + ', ' + saturation + ', 50%)';
+                }
+                break;
+        }
+    });
 
     for (let i = 0; i < progressArray.length; i++) {
         progressArray[i].style.color = 'inherit';
@@ -65,4 +87,4 @@ var observer = new MutationObserver(function () {
     }
 })
 
-observer.observe(document.getElementById('app'), { childList: true, attributes: true, subtree: true});
+observer.observe(document.getElementById('app'), { childList: true, attributes: true, subtree: true });

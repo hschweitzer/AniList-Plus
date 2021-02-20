@@ -8,27 +8,27 @@
 
 function showStudioLink(navBar, vuedata) {
     navBar.insertAdjacentHTML(
-        'beforeend', 
+        'beforeend',
         `<a ${vuedata} id="studio_link" style="cursor: pointer;" class="link">Studios</a>`
     )
 }
 
-var observer = new MutationObserver(function() {
+var observer = new MutationObserver(function () {
     let navBar = document.querySelector('.content>.nav');
     const linkElements = document.querySelectorAll('.link');
     let url = window.location.href;
     let studioLink = document.getElementById('studio_link');
 
-    if(navBar && !studioLink && (url.includes('/anime/'))) { 
+    if (navBar && !studioLink && (url.includes('/anime/'))) {
         // When re-visiting the page of an anime the studio link will sometimes be loaded before the first test
         let vuedata = navBar.firstElementChild.attributes[0].name;
         showStudioLink(navBar, vuedata);
         studioLink = document.getElementById('studio_link');
         fetchStudios(getMediaId()).then((res) => {
             let studioList = res.data.Media.studios.nodes;
-    
+
             studioLink.addEventListener('click', () => {
-                
+
                 if (window.location.href.split('/').length !== 5) {
                     let oldLink = document.querySelector('.router-link-exact-active.router-link-active');
                     oldLink.classList.add('old-container-active');
@@ -42,16 +42,16 @@ var observer = new MutationObserver(function() {
                 oldContainer.style.display = 'none';
                 let studiosElement = createStudiosElement(studioList);
                 contentContainer.appendChild(studiosElement);
-    
+
                 navBar.addEventListener('click', (e) => {
-                    e = window.event? event.srcElement: e.target;
-                    if(e.id !== "studio_link") {
+                    e = window.event ? event.srcElement : e.target;
+                    if (e.id !== "studio_link") {
                         studiosElement.remove();
-                        if(e.className && e.className.indexOf('old-container-active') != -1) {
+                        if (e.className && e.className.indexOf('old-container-active') != -1) {
                             oldContainer.style.display = 'block';
-                        }                    
+                        }
                         studioLink.classList.remove('router-link-exact-active', 'router-link-active');
-                    } 
+                    }
                 });
             });
         });
@@ -61,7 +61,7 @@ var observer = new MutationObserver(function() {
     // Can be heavily optimized with moderate work. Too lazy atm
     linkElements.forEach(linkElement => {
         linkElement.addEventListener('click', (e) => {
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         })
     });
 });
@@ -105,7 +105,7 @@ function createStudiosElement(studioList) {
             const mediaScore = mediaList[j].averageScore;
             const mediaYear = mediaList[j].startDate.year;
             const mediaString =
-            `<a href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
+                `<a href="${mediaLink}" class="cover" data-src="${mediaCover}" lazy="loaded" style="background-image: url(&quot;${mediaCover}&quot;);">
                 <div class="image-text">
                     <div data-v-4fd869dd>${mediaYear} · ${mediaScore}</div>
                 </div> <!---->
@@ -162,11 +162,11 @@ function fetchQuery(query, url, variables) {
             variables: variables
         })
     };
-    
+
     return fetch(url, options)
-    .then(handleResponse)
-    .then(handleData)
-    .catch(handleError);
+        .then(handleResponse)
+        .then(handleData)
+        .catch(handleError);
 }
 
 function handleResponse(response) {
@@ -234,7 +234,7 @@ function getStudios() {
         }
     }
     `;
-} 
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // MUTATION https://anilist.github.io/ApiV2-GraphQL-Docs/mutation.doc.html /
