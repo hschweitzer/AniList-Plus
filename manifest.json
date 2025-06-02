@@ -1,33 +1,35 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Anilist+ for Anilist",
-  "version": "0.4.2",
-
+  "version": "0.4.3",
   "description": "Enhanced AniList experience",
-
-  "page_action": {
-      "default_title": "AniList+ for Anilist",
-      "default_icon": {
-        "16": "images/icon.png",
-        "32": "images/icon.png",
-        "64": "images/icon.png",
-        "128": "images/icon-128.png"
-      }
-    },
-  "author": "rirrsmo & hadrian",
+  "action": {
+    "default_title": "AniList+ for Anilist",
+    "default_icon": {
+      "16": "images/icon.png",
+      "32": "images/icon.png",
+      "64": "images/icon.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "author": "hadrian",
   "content_scripts": [
     {
-      "matches": ["*://anilist.co/*"],
+      "matches": [
+        "*://anilist.co/*"
+      ],
       "js": [
-        "list_visual_changes.js", 
+        "list_visual_changes.js",
         "content-script.js"
       ],
       "run_at": "document_end",
       "all_frames": true
     }
   ],
-  "minimum_chrome_version": "50",
-  "permissions": ["*://anilist.co/*"],
+  "minimum_chrome_version": "88",
+  "host_permissions": [
+    "*://anilist.co/*"
+  ],
   "short_name": "AniList+",
   "icons": {
     "16": "images/icon.png",
@@ -35,4 +37,4 @@
     "64": "images/icon.png",
     "128": "images/icon-128.png"
   }
-  }
+}
